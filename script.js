@@ -1,31 +1,38 @@
-function showCoords(event) {
-    // Får ut X- och Y-positionen
+function rotateCursor(event) {
+    // Fetch the x- and y-position
     let x = event.clientX;
     let y = event.clientY;
 
-    // Modifierar X- och Y-positionen för att passa ikonen
+    // Modifies the x- and y-position to fit the svg-icon
     let newX = x - 6;
     let newY = y - 3;
 
-    // För att underlätta koden längre ned
+    // To simplify the code further down
     let cursorID = document.getElementById("cursor");
 
-    // Lagrar bredden på fönstret i variabler
+    // Storing window width and height in variables
     let winWidth = window.innerWidth;
     let winHeight = window.innerHeight;    
 
-    // Räknar ut mitten av skärmen
-    let centerX = winWidth / 2 - 12;
-    let centerY = winHeight / 2 - 10;
+    // Calculate the center of window (with offsets)
+    let centerX = (winWidth / 2) - 12.5;
+    let centerY = (winHeight / 2) - 12.5;
 
-    // Räknar ut vinkeln den ska roteras
+    // Offset for the icon that has a slight angle to it as default
+    let offset = 25;
+    
+    // Calculate the angle
     let radians = Math.atan2(newX - centerX, newY - centerY);
-    let degrees = (radians * (180 / Math.PI) * -1) + 180 + 25;
+    let degrees = (radians * (180 / Math.PI) * -1) + 180 + offset;
+
+    // Rotating the icon
     cursorID.style.transform = 'rotate('+degrees+'deg)';
     
-    // Flyttar ikonen
+    // Moves the svg-icon
     cursorID.style.left = newX + "px";
     cursorID.style.top = newY + "px";
+
+    // Change the color of the svg-icon depending on left or right side of the window
     if(newX < centerX) {
         cursorID.style.fill = "var(--secondary-color)";
     }
